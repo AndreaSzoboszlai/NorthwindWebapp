@@ -32,7 +32,6 @@
                             <td><c:out value="${t1.getProduct()}"/></td>
                             <td><c:out value="${t1.getCompany()}"/></td>
                         </tr>
-
                     </c:forEach>
                 </table>
                 <div class="containerfoot"></div>
