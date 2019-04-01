@@ -105,9 +105,13 @@ public final class DatabaseNorthwindDao extends AbstractDao implements Northwind
         List<Integer> orderIDList = new ArrayList<>();
         String company = resultSet.getString("company");
         Array orderIds = resultSet.getArray("order_id");
-        String[] orderIdArray = (String[])orderIds.getArray();
-        for (String id : orderIdArray){
-            orderIDList.add(Integer.valueOf(id));
+        Short[] orderIdArray = (Short[])orderIds.getArray();
+        for (Short id : orderIdArray){
+            if (id == null) {
+                id = 0;
+            }
+            int num = Integer.valueOf(id);
+            orderIDList.add(num);
         }
         return new Task4(company, orderIDList);
     }

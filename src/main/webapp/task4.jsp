@@ -20,10 +20,10 @@
         <div class="wrapper">
             <div class="container">
                 <div class="containerhead">
-                    <div class="title"><a href="">Task 2: query results</a></div>
+                    <div class="title"><a href="">Task 4: query results</a></div>
                 </div>
                 <table>
-                    <tr>
+                    <tr class = "tablehead">
                         <td>Company</td>
                         <td>Order IDs</td>
                     </tr>

@@ -23,7 +23,7 @@
                     <div class="title"><a href="">Task 2: query results</a></div>
                 </div>
                 <table>
-                    <tr>
+                    <tr class = "tablehead">
                         <td>Company</td>
                         <td>Product number</td>
                     </tr>

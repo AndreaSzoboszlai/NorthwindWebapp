@@ -23,7 +23,7 @@
                     <div class="title"><a href="">Task 3: query results</a></div>
                 </div>
                 <table>
-                    <tr>
+                    <tr class = "tablehead">
                         <td>Company</td>
                     </tr>
                     <c:forEach var="t3" items="${task3}">
