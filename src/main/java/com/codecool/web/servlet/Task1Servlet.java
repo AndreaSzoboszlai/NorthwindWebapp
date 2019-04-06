@@ -42,6 +42,7 @@ public class Task1Servlet extends AbstractServlet {
             String companyName = req.getParameter("filter1");
             List<Task1> task1 = taskService.getFilteredTask1(companyName);
             req.setAttribute("task1", task1);
+
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }

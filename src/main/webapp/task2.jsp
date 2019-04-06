@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,18 +23,26 @@
                 <div class="containerhead">
                     <div class="title"><a href="">Task 2: query results</a></div>
                 </div>
-                <table>
-                    <tr class = "tablehead">
-                        <td>Company</td>
-                        <td>Product number</td>
-                    </tr>
-                     <c:forEach var="t2" items="${task2}">
-                        <tr>
-                            <td><c:out value="${t2.getCompany()}"/></td>
-                            <td><c:out value="${t2.getProductNum()}"/></td>
-                        </tr>
-                    </c:forEach>
-                </table>
+                <c:choose>
+                  <c:when test="${fn:length(task2) == 0}">
+                    <p> No company with the given name </p>
+                  </c:when>
+                  <c:otherwise>
+                        <table>
+                            <tr class = "tablehead">
+                                <td>Company</td>
+                                <td>Product number</td>
+                            </tr>
+                             <c:forEach var="t2" items="${task2}">
+                                <tr>
+                                    <td><c:out value="${t2.getCompany()}"/></td>
+                                    <td><c:out value="${t2.getProductNum()}"/></td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                  </c:otherwise>
+                </c:choose>
+
                 <div class="containerfoot"></div>
                 <br>
                 Filter by company:

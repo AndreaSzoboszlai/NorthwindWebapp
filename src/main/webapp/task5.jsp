@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,20 +23,28 @@
                 <div class="containerhead">
                     <div class="title"><a href="">Task 5: query results</a></div>
                 </div>
-                <table>
-                    <tr class = "tablehead">
-                        <td> Company </td>
-                        <td> Products </td>
-                        <td> Unit Price </td>
-                    </tr>
-                    <c:forEach var="t5" items="${task5}">
-                        <tr>
-                            <td><c:out value="${t5.getCompany()}"/></td>
-                            <td><c:out value="${t5.getProducts()}"/></td>
-                            <td><c:out value="${t5.getPrice()}"/></td>
-                        </tr>
-                    </c:forEach>
-                <table>
+                <c:choose>
+                  <c:when test="${fn:length(task5) == 0}">
+                    <p> No company with the given name </p>
+                  </c:when>
+                  <c:otherwise>
+                        <table>
+                            <tr class = "tablehead">
+                                <td> Company </td>
+                                <td> Products </td>
+                                <td> Unit Price </td>
+                            </tr>
+                            <c:forEach var="t5" items="${task5}">
+                                <tr>
+                                    <td><c:out value="${t5.getCompany()}"/></td>
+                                    <td><c:out value="${t5.getProducts()}"/></td>
+                                    <td><c:out value="${t5.getPrice()}"/></td>
+                                </tr>
+                            </c:forEach>
+                        <table>
+                  </c:otherwise>
+                </c:choose>
+
                 <div class="containerfoot"></div>
                 <br>
                 Filter by company:
