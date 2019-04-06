@@ -35,4 +35,19 @@ public class Task2Servlet extends AbstractServlet {
 
         req.getRequestDispatcher("task2.jsp").forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try (Connection connection = getConnection(req.getServletContext())) {
+            NorthwindDao northwindDaoDao = new DatabaseNorthwindDao(connection);
+            Task1Service taskService = new SimpleTask1Service(northwindDaoDao);
+            String companyName = req.getParameter("filter2");
+            List<Task2> task2 = taskService.getFilteredTask2(companyName);
+            req.setAttribute("task2", task2);
+        } catch (SQLException ex) {
+            throw new ServletException(ex);
+        }
+
+        req.getRequestDispatcher("task2.jsp").forward(req, resp);
+    }
 }

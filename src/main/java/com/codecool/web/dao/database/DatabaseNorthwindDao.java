@@ -26,6 +26,8 @@ public final class DatabaseNorthwindDao extends AbstractDao implements Northwind
         return task1QueryResult;
     }
 
+    //SELECT product_name AS product, company_name AS company FROM products JOIN suppliers ON products.supplier_id = suppliers.supplier_id WHERE company_name=? ORDER BY product ASC;
+
     @Override
     public List<Task2> task2() throws SQLException {
         List<Task2> task2QueryResult = new ArrayList<>();
@@ -83,6 +85,35 @@ public final class DatabaseNorthwindDao extends AbstractDao implements Northwind
         return task5QueryResult;
     }
 
+    @Override
+    public List<Task1> findTask1(String companyName) throws SQLException {
+        List<Task1> foundTask1 = new ArrayList<>();
+        String sql = "SELECT product_name AS product, company_name AS company FROM products JOIN suppliers ON products.supplier_id = suppliers.supplier_id WHERE company_name=? ORDER BY product ASC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, companyName);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foundTask1.add(fetchTask1(resultSet));
+                }
+            }
+        }
+        return foundTask1;
+    }
+
+    @Override
+    public List<Task2> findTask2(String companyName) throws SQLException {
+        List<Task2> foundTask2 = new ArrayList<>();
+        String sql = "SELECT company_name AS company, COUNT(product_name) as products from products JOIN suppliers on products.supplier_id = suppliers.supplier_id  WHERE suppliers.company_name =? GROUP BY suppliers.company_name ORDER BY Products DESC, Company ASC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, companyName);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foundTask2.add(fetchTask2(resultSet));
+                }
+            }
+        }
+        return foundTask2;
+    }
 
     private Task1 fetchTask1(ResultSet resultSet) throws SQLException {
         String product = resultSet.getString("product");

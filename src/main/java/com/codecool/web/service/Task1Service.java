@@ -18,4 +18,7 @@ public interface Task1Service {
 
     List<Task5> getTask5() throws SQLException;
 
+    List<Task1> getFilteredTask1(String companyName) throws SQLException;
+
+    List<Task2> getFilteredTask2(String companyName) throws SQLException;
 }
