@@ -55,7 +55,6 @@ public final class DatabaseNorthwindDao extends AbstractDao implements Northwind
         return task3QueryResult;
     }
 
-    //need to rewrite
     public List<Task4> task4() throws SQLException {
         List<Task4> task4QueryResult = new ArrayList<>();
         String sql = "SELECT company_name AS company, ARRAY_AGG(order_id) AS order_id\n" +
@@ -103,7 +102,7 @@ public final class DatabaseNorthwindDao extends AbstractDao implements Northwind
     @Override
     public List<Task2> findTask2(String companyName) throws SQLException {
         List<Task2> foundTask2 = new ArrayList<>();
-        String sql = "SELECT company_name AS company, COUNT(product_name) as products from products JOIN suppliers on products.supplier_id = suppliers.supplier_id  WHERE suppliers.company_name =? GROUP BY suppliers.company_name ORDER BY Products DESC, Company ASC";
+        String sql = "SELECT company_name AS company, COUNT(product_name) as products from products JOIN suppliers on products.supplier_id = suppliers.supplier_id WHERE company_name=? GROUP BY suppliers.company_name ORDER BY Products DESC, Company ASC";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, companyName);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -113,6 +112,55 @@ public final class DatabaseNorthwindDao extends AbstractDao implements Northwind
             }
         }
         return foundTask2;
+    }
+
+    @Override
+    public List<Task3> findTask3(String companyName) throws SQLException {
+        List<Task3> foundTask3 = new ArrayList<>();
+        String sql = "SELECT company_name AS company FROM products JOIN suppliers ON products.supplier_id = suppliers.supplier_id WHERE company_name=? GROUP BY company_name HAVING COUNT(product_name) >= 5\n" +
+            " ORDER BY company ASC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, companyName);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foundTask3.add(fetchTask3(resultSet));
+                }
+            }
+        }
+        return foundTask3;
+    }
+
+    @Override
+    public List<Task4> findTask4(String companyName) throws SQLException {
+        List<Task4> foundTask4 = new ArrayList<>();
+        String sql = "SELECT company_name AS company, ARRAY_AGG(order_id) AS order_id\n" +
+            "FROM customers LEFT JOIN orders ON customers.customer_id = orders.customer_id\n" +
+            "WHERE company_name=? GROUP BY customers.company_name\n" +
+            "ORDER BY company ASC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, companyName);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foundTask4.add(fetchTask4(resultSet));
+                }
+            }
+        }
+        return foundTask4;
+    }
+
+    @Override
+    public List<Task5> findTask5(String companyName) throws SQLException {
+        List<Task5> foundTask5 = new ArrayList<>();
+        String sql = "select suppliers.company_name, products.product_name, products.unit_price from products inner join suppliers on suppliers.supplier_id = products.supplier_id join (select products.supplier_id, MAX(products.unit_price) as max_unit from products group by products.supplier_id) as try on products.supplier_id = try.supplier_id and products.unit_price = try.max_unit where company_name=? order by unit_price desc";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, companyName);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foundTask5.add(fetchTask5(resultSet));
+                }
+            }
+        }
+        return foundTask5;
     }
 
     private Task1 fetchTask1(ResultSet resultSet) throws SQLException {

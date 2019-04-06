@@ -40,12 +40,29 @@ public final class SimpleTask1Service implements Task1Service {
         return northwindDao.task5();
     }
 
+    @Override
     public List<Task1> getFilteredTask1(String companyName) throws SQLException {
         return northwindDao.findTask1(companyName);
     }
 
+    @Override
     public List<Task2> getFilteredTask2(String companyName) throws SQLException {
         return northwindDao.findTask2(companyName);
+    }
+
+    @Override
+    public List<Task3> getFilteredTask3(String companyName) throws SQLException {
+        return northwindDao.findTask3(companyName);
+    }
+
+    @Override
+    public List<Task4> getFilteredTask4(String companyName) throws SQLException {
+        return northwindDao.findTask4(companyName);
+    }
+
+    @Override
+    public List<Task5> getFilteredTask5(String companyName) throws SQLException {
+        return northwindDao.findTask5(companyName);
     }
 
 }

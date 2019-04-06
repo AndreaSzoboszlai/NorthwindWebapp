@@ -22,6 +22,7 @@
                 <div class="containerhead">
                     <div class="title"><a href="">Task 1: query results</a></div>
                 </div>
+
                 <table>
                     <tr class = "tablehead">
                         <td>Product</td>

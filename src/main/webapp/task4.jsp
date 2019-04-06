@@ -39,6 +39,12 @@
                     </c:forEach>
                 </table>
                 <div class="containerfoot"></div>
+                <br>
+                Filter by company:
+                <form method="POST" action="Task4">
+                    <input type="text" id="filter4" name="filter4">
+                    <input type="submit" value="Filter">
+                <form>
             </div>
         </div>
     </body>

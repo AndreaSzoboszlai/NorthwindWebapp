@@ -22,4 +22,9 @@ public interface NorthwindDao {
 
     List<Task2> findTask2(String companyName) throws SQLException;
 
+    List<Task3> findTask3(String companyName) throws SQLException;
+
+    List<Task4> findTask4(String companyName) throws SQLException;
+
+    List<Task5> findTask5(String companyName) throws SQLException;
 }
